@@ -1,13 +1,18 @@
 import { useState } from 'react'
 import {React360Viewer} from 'react-360-product-viewer'
 import './App.scss';
-
+import axios from "axios"
 const BASE_PATH = "https://vinylverse.s3.amazonaws.com/360";
 
 function App() {
   const [ email, setEmail] = useState('')
   const submitEmail = () => {
-    console.log(`submit ${email}`)
+    axios.post('https://sheet.best/api/sheets/38873ba3-264a-4e9e-9269-56a7b2eb48e9', {email})
+    .then(response => {
+      console.log("res", response);
+    }).catch((e)=>{
+      console.log(e)
+    })
   }
   return (
     <div className="App">
@@ -33,8 +38,8 @@ function App() {
           <div class="c-formContainer">
           <form class="c-form">
               <input class="c-form__input"  value={email} onChange={e =>  setEmail(e.currentTarget.value)}placeholder="E-mail" type="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" required/>
-              <label class="c-form__buttonLabel" for="checkbox">
-                <button class="c-form__button" type="button" onClick={submitEmail}>Send</button>
+              <label class="c-form__buttonLabel" for="checkbox"  onClick={submitEmail}>
+                <button class="c-form__button" type="button">Send</button>
               </label>
               <label class="c-form__toggle" for="checkbox" data-title="Notify me"></label>
             </form>
